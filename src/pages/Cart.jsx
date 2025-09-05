@@ -201,7 +201,7 @@ export const Cart = () => {
         // Empty Cart Section
         <div className="flex flex-col gap-4 justify-center items-center min-h-[60vh] px-4 text-center">
           <h1 className="font-bold text-2xl text-red-500">Cart is empty</h1>
-          <div className="w-full max-w-xl">
+          <div className="w-60 sm:w-80 md:w-full max-w-xl">
             <DotLottieReact
               src="https://lottie.host/3bdd20c2-3f0a-4ff2-baf7-b2e83e41cbff/2bQyP8jLAh.lottie"
               loop

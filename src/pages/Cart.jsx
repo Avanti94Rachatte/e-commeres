@@ -8,7 +8,7 @@ import { MdDeliveryDining } from "react-icons/md";
 
 export const Cart = () => {
   const { cartItem, updateQuantity, deleteItem } = useCart();
-  const totalPrice = cartItem.reduce((total, item) => total + item.price, 0);
+  const totalPrice = cartItem.reduce((total, item) => total + item.price * item.quantity, 0);
   const navigate = useNavigate();
 
   return (
@@ -23,42 +23,48 @@ export const Cart = () => {
               {cartItem.map((item, index) => (
                 <div
                   key={index}
-                  className="bg-gray-100 p-4 rounded-md flex flex-wrap md:flex-nowrap justify-between items-center gap-4"
+                  className="bg-gray-100 p-4 rounded-md flex justify-between items-center gap-4"
                 >
-                  <div className="flex gap-4 min-w-0">
+                  {/* Left: Image + Title + Price */}
+                  <div className="flex gap-4 min-w-0 flex-1">
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-20 h-20 rounded-md flex-shrink-0"
+                      className="w-24 h-24 rounded-md flex-shrink-0 object-cover"
                     />
                     <div className="min-w-0">
-                      <h1 className="line-clamp-2 text-base font-medium break-words">{item.title}</h1>
+                      <h1 className="line-clamp-2 text-base font-medium break-words">
+                        {item.title}
+                      </h1>
                       <p className="text-red-500 font-semibold text-lg mt-1">
                         ₹ {item.price}
                       </p>
                     </div>
                   </div>
 
-                  {/* Quantity Controls */}
-                  <div className="bg-red-500 text-white flex items-center gap-4 px-4 py-2 rounded-md font-bold text-xl">
-                    <button
-                      onClick={() => updateQuantity(cartItem, item.id, "decrease")}
-                      className="cursor-pointer"
-                    >-</button>
-                    <span>{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(cartItem, item.id, "incerase")}
-                      className="cursor-pointer"
-                    >+</button>
-                  </div>
+                  {/* Right: Fixed Controls */}
+                  <div className="flex items-center gap-4 shrink-0 w-[220px] justify-end">
+                    {/* Quantity Controls */}
+                    <div className="bg-red-500 text-white flex items-center gap-4 px-4 py-2 rounded-md font-bold text-xl">
+                      <button
+                        onClick={() => updateQuantity(cartItem, item.id, "decrease")}
+                        className="cursor-pointer"
+                      >-</button>
+                      <span>{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(cartItem, item.id, "increase")}
+                        className="cursor-pointer"
+                      >+</button>
+                    </div>
 
-                  {/* Delete Button */}
-                  <span
-                    onClick={() => deleteItem(item.id)}
-                    className="hover:bg-white/60 transition-all p-3 rounded-full hover:shadow-2xl cursor-pointer"
-                  >
-                    <FaRegTrashAlt className="text-red-500 text-2xl" />
-                  </span>
+                    {/* Delete Button */}
+                    <span
+                      onClick={() => deleteItem(item.id)}
+                      className="hover:bg-white/60 transition-all p-3 rounded-full hover:shadow-2xl cursor-pointer"
+                    >
+                      <FaRegTrashAlt className="text-red-500 text-2xl" />
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>

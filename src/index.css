@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* arrow */
+
+.arrow{
+    height: 40px;
+    width: 40px;
+    margin: 1px;
+}
+
+/* input color */
+
+input{
+    background-color: #ffffff;
+    accent-color: red;
+    border: 1px solid #CCC ;
+    color: #333;
+}

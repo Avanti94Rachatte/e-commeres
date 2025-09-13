@@ -31,7 +31,7 @@ const Navbar = () => {
 
   return (
     <div className="bg-slate-200/50 py-3 mb-10 shadow-2xl">
-      <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <div className="max-w-6xl mx-3 px-2 flex justify-between items-center">
         {/* Logo & Country */}
         <div className="flex items-center gap-4">
           <Link to="/">
@@ -50,32 +50,32 @@ const Navbar = () => {
         </div>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-4">
+        <nav className="hidden md:flex items-center gap-2">
           <input
             onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="Search..."
             value={search}
-            className="bg-white p-2 ml-4 rounded-md border-2 border-gray-400 w-48"
+            className="bg-white p-2 ml-2 rounded-md border-2 border-gray-400 w-48"
           />
 
-          <Category />
+          <Category className="w-20"/>
 
-          <ul className="flex gap-6 items-center text-lg font-semibold">
+          <ul className="flex gap-4 items-center text-lg font-semibold">
             <NavLink to="/"> <li>Home</li> </NavLink>
             <NavLink to="/products"> <li>Products</li> </NavLink>
             <NavLink to="/contact"> <li>Contact</li> </NavLink>
             <NavLink to="/about"> <li>About</li> </NavLink>
           </ul>
 
-          <Link to="/cart" className="relative">
+          <Link to="/cart" className="relative m-2">
             <IoCartOutline className="h-6 w-6" />
             <span className="bg-rose-600 text-xs px-2 py-0.5 rounded-full absolute -top-2 -right-2 text-white">
               {cartItem.length}
             </span>
           </Link>
 
-          <Link to="/wishlist" className="relative">
+          <Link to="/wishlist" className="relative m-2 mr-4">
             <FaHeart className="h-6 w-6 text-red-500" />
             <span className="bg-red-600 text-xs px-2 py-0.5 rounded-full absolute -top-2 -right-2 text-white">
               {wishlist.length}

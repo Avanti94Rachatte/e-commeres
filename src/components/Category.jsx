@@ -23,7 +23,7 @@ const Category = () => {
   };
 
   return (
-    <div className=" rounded-md p-2 hover:scale-x-110 duration-700 bg-transparent"> {/* Added padding */}
+    <div className=" rounded-md p-2 hover:scale-x-110 duration-700 bg-transparent w-50"> {/* Added padding */}
       <div className="max-w-7xl mx-1 flex justify-center px-4">
         <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md">
           <select

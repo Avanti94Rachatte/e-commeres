@@ -8,7 +8,9 @@ import { MdDeliveryDining } from "react-icons/md";
 
 export const Cart = () => {
   const { cartItem, updateQuantity, deleteItem } = useCart();
-  const totalPrice = cartItem.reduce((total, item) => total + item.price * item.quantity, 0);
+  //const totalPrice = cartItem.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalPrice = Number(cartItem.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2));
+
   const navigate = useNavigate();
 
   return (
@@ -28,7 +30,7 @@ export const Cart = () => {
                   {/* Left: Image + Title + Price */}
                   <div className="flex gap-4 min-w-0 flex-1">
                     <img
-                      src={item.image}
+                      src={item.images[0]}
                       alt={item.title}
                       className="w-24 h-24 rounded-md flex-shrink-0 object-cover"
                     />
@@ -52,7 +54,7 @@ export const Cart = () => {
                       >-</button>
                       <span>{item.quantity}</span>
                       <button
-                        onClick={() => updateQuantity(cartItem, item.id, "increase")}
+                        onClick={() => updateQuantity(cartItem, item.id, "incerase")}
                         className="cursor-pointer"
                       >+</button>
                     </div>
@@ -179,7 +181,7 @@ export const Cart = () => {
                   <span className="flex gap-2 items-center text-gray-700">
                     <MdDeliveryDining /> Grand Total
                   </span>
-                  <p className="text-red-500 font-semibold">₹ {20 + totalPrice}</p>
+                  <p className="text-red-500 font-semibold">₹ {20 + totalPrice.toFixed(2)}</p>
                 </div>
 
                 <div>

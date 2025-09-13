@@ -81,7 +81,7 @@ const Carousel = () => {
                 {/* Text Section */}
                 <div className="space-y-4 text-center md:text-left">
                   <h3 className="text-red-500 font-semibold text-sm">
-                    Powering Your World with the Best in Electronics
+                  Powering Your World with the Best in Shopping
                   </h3>
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase text-white max-w-xl lg:line-clamp-3 line-clamp-2 md:line-clamp-none sm:line-clamp-none">
                     {item.title}
@@ -97,9 +97,10 @@ const Carousel = () => {
                 </div>
 
                 {/* Image Section */}
+                
                 <div className="">
                   <img onClick={() => navigate(`/products/${item.id}`)}
-                    src={item.image}
+                    src={item.images[0]}
                     alt={item.title}
                     className="rounded-full w-60 sm:w-80 md:w-[300px] lg:w-[400px] hover:scale-105 transition-all shadow-2xl shadow-red-400"
                   />

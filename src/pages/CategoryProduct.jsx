@@ -8,25 +8,26 @@ import { ProductListView } from '../components/ProductListView';
 const CategoryProduct = () => {
   const [searchData, setSearchData] = useState([]);
   const params = useParams();
-  const category = params.category;
+  const category = params.category; // e.g. "smartphones"
   const navigate = useNavigate();
 
   const getFilterData = async () => {
     try {
       const res = await axios.get(
-        `https://fakestoreapi.in/api/products/category?type=${category}`
+        `https://dummyjson.com/products/category/${category}`
       );
-      const data = res.data.products;
-      setSearchData(data);
+      const data = res.data.products; // ✅ array of products
+      setSearchData(data || []);
     } catch (error) {
-      console.log(error);
+      console.log('Error fetching category products:', error);
+      setSearchData([]);
     }
   };
 
   useEffect(() => {
     getFilterData();
     window.scrollTo(0, 0);
-  }, []);
+  }, [category]); // ✅ re-fetch when category changes
 
   return (
     <div className="min-h-screen">
@@ -43,8 +44,8 @@ const CategoryProduct = () => {
 
           {/* Product List */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {searchData.map((product, index) => (
-              <ProductListView key={index} product={product} />
+            {searchData.map((product) => (
+              <ProductListView key={product.id} product={product} />
             ))}
           </div>
         </div>
@@ -59,4 +60,3 @@ const CategoryProduct = () => {
 };
 
 export default CategoryProduct;
- 

@@ -14,18 +14,18 @@ export const FilterSection = ({
   isOpen,
   onClose,
 }) => {
-  const { brandOnlyData, categoryOnlyData, search, setSearch } = getData(); // ✅ global search
+  const { brandOnlyData, categoryOnlyData, search, setSearch } = getData(); // ✅ no setters
 
   return (
     <>
-      {/* Desktop: Always visible */}
+      {/* Desktop Sidebar */}
       <div className="hidden lg:block w-full lg:w-[280px]">
         <div className="bg-gray-100 p-4 rounded-md h-max w-full">
           <FilterContent />
         </div>
       </div>
 
-      {/* Mobile/Tablet: Slide-in modal */}
+      {/* Mobile/Tablet: Slide-in */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/40 lg:hidden">
           <div className="bg-white w-full max-w-sm p-4 overflow-y-auto shadow-lg">
@@ -35,20 +35,17 @@ export const FilterSection = ({
                 <IoClose />
               </button>
             </div>
-
             <FilterContent />
           </div>
         </div>
       )}
     </>
-
-    // Extracted Filter content for reuse
   );
 
   function FilterContent() {
     return (
       <>
-        {/* ✅ Shared Search */}
+        {/* Search */}
         <input
           onChange={(e) => setSearch(e.target.value)}
           type="text"
@@ -57,7 +54,7 @@ export const FilterSection = ({
           className="bg-white p-2 rounded-md border-2 border-gray-400 w-full"
         />
 
-        {/* Category Section */}
+        {/* Category */}
         <h1 className="mt-5 font-semibold text-xl">Category</h1>
         <div className="flex flex-col gap-2 mt-3 max-h-48 overflow-auto">
           {categoryOnlyData?.map((item, index) => (
@@ -74,21 +71,25 @@ export const FilterSection = ({
           ))}
         </div>
 
-        {/* Brand Section */}
+        {/* Brand */}
         <h1 className="mt-5 font-semibold text-xl mb-3">Brand</h1>
         <select
           onChange={handleBrandChange}
           className="bg-white w-full border-2 border-gray-200 rounded-md p-2"
           value={brand}
         >
-          {brandOnlyData?.map((item, index) => (
-            <option key={index} value={item}>
-              {item.toUpperCase()}
-            </option>
-          ))}
+          <option value="All">All</option>
+          {brandOnlyData?.map(
+            (item, index) =>
+              item && (
+                <option key={index} value={item}>
+                  {item.toUpperCase()}
+                </option>
+              )
+          )}
         </select>
 
-        {/* Price Range Section */}
+        {/* Price Range */}
         <h1 className="mt-5 font-semibold text-xl mb-3">Price Range</h1>
         <div className="flex flex-col gap-2">
           <label>
@@ -106,11 +107,11 @@ export const FilterSection = ({
           />
         </div>
 
-        {/* Reset Button */}
+        {/* Reset */}
         <button
           onClick={() => {
             setCategory("All");
-            setSearch(""); // ✅ reset global search
+            setSearch("");
             setBrand("All");
             setPriceRange([0, 5000]);
           }}

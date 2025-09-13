@@ -44,6 +44,8 @@ export const CartProvider =({children})=>{
         )
     }
 
+    
+
     const deleteItem =(productId)=>{
         setCartItem(cartItem.filter(item =>item.id !== productId))
         toast.success(" Product deleted ")

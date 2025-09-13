@@ -28,12 +28,21 @@ export const ProductCard = ({ product }) => {
         md:flex flex-col
         "
     >
-      <img
-        onClick={() => navigate(`/products/${product.id}`)}
-        src={product.image}
-        alt={product.title}
-        className="bg-gray-100 aspect-square w-full object-cover rounded-md"
-      />
+    {/* <div className='border relative border-gray-100 rounded-2xl cursor-pointer hover:scale-105 hover:shadow-2xl transition-all p-2 h-max'> */}
+    
+  <div className="bg-cover">
+  
+    <img
+      
+      src={product.images[0]}
+      alt={`${product.title}`}
+      className=" bg-gray-100 aspect-square"
+      onClick={() => navigate(`/products/${product.id}`)}
+    />
+  
+</div>
+
+
        <button
         onClick={() => toggleWishlist(product)}
         className="absolute top-2 right-2 text-xl"
@@ -45,7 +54,7 @@ export const ProductCard = ({ product }) => {
         )}
       </button>
       
-      <h1 className="line-clamp-2 p-1 font-semibold text-sm sm:text-base md:text-lg">
+      <h1 className="line-clamp-1 p-1 font-semibold text-sm sm:text-base md:text-lg">
         {product.title}
       </h1>
       <p className="my-1 text-sm sm:text-base md:text-lg text-gray-400">

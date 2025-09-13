@@ -13,12 +13,12 @@ export const SingleProduct = () => {
 
   const getSingleProduct = async () => {
     try {
-      const res = await axios.get(`https://fakestoreapi.in/api/products/${params.id}`);
-      const product = res.data.product;
+      const res = await axios.get(`https://dummyjson.com/products/${params.id}`);
+      const product = res.data;
       setSingleProduct(product);
     } catch (error) {
       console.log(error);
-    }
+    }  
   };
 
   useEffect(() => {
@@ -26,7 +26,11 @@ export const SingleProduct = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const originalPrice = singleProduct?.price + (singleProduct?.price * singleProduct?.discount / 100);
+  // const originalPrice = singleProduct?.price + (singleProduct?.price * singleProduct?.discount / 100);
+  const discount = singleProduct?.discountPercentage || 0;
+const originalPrice = singleProduct?.price
+  ? singleProduct.price + (singleProduct.price * discount) / 100
+  : 0;
 
   return (
     <div>
@@ -38,7 +42,7 @@ export const SingleProduct = () => {
             {/* Product Image */}
             <div className="w-full">
               <img
-                src={singleProduct.image}
+                src={singleProduct.images[0]}
                 alt={singleProduct.title}
                 className="rounded-xl w-full object-contain max-h-[500px]"
               />
@@ -56,12 +60,27 @@ export const SingleProduct = () => {
                 <span className="text-red-500">₹ {singleProduct.price}</span>
                 <span className="line-through text-gray-400 text-base sm:text-lg">₹ {Math.round(originalPrice)}</span>
                 <span className="bg-red-500 text-white text-sm px-2 py-1 rounded-md">
-                  {singleProduct.discount}% OFF
+                  {singleProduct.discount} {discount}% OFF
                 </span>
               </div>
 
-              <p className="text-gray-700 text-sm sm:text-base">{singleProduct.discription}</p>
-
+              <p className="text-gray-700 text-sm sm:text-base">{singleProduct.description}</p>
+              <div className="text-gray-700 text-sm sm:text-base">
+                              
+                              {singleProduct.reviews && singleProduct.reviews.length > 0 && (
+                                <div className="mt-4">
+                                  <h2 className="font-semibold text-lg">Reviews:</h2>
+                                  {singleProduct.reviews.map((review, index) => (
+                                    <div key={index} className="border p-2 rounded-md my-2">
+                                      <p className="font-semibold">{review.reviewerName} ({review.rating}⭐)</p>
+                                      <p>{review.comment}</p>
+                                      <p className="text-gray-400 text-xs">{review.date}</p>
+                                    </div>
+                                  ))}
+                                </div>
+)}
+      </div>
+           
               {/* Quantity Selector */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-4">
                 <label htmlFor="qty" className="text-sm font-medium text-gray-700">

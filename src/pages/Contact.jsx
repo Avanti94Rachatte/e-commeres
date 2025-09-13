@@ -18,7 +18,7 @@ const Contact = () => {
             <div>
               <h3 className="text-xl sm:text-2xl font-semibold">Contact Info</h3>
               <p className="text-gray-300 text-sm sm:text-base">
-                Have a question or need support? We're here to help you with your electronics journey.
+                Have a question or need support? We're here to help you with your Shoping journey.
               </p>
             </div>
             <div className="text-sm sm:text-base space-y-2">

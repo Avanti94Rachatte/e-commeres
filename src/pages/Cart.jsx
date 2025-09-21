@@ -127,6 +127,15 @@ export const Cart = () => {
         ))}
       </div>
 
+      {/* Total Price Section */}
+    {cartItem.length > 0 && (
+      <div className="flex justify-end mb-6">
+        <span className="font-bold text-lg">
+          Total: ₹ {totalPrice.toFixed(2)}
+        </span>
+      </div>
+    )}
+
       {/* Delivery Form Section */}
       <div className="w-full flex justify-center">
         <div className="w-full md:w-1/2 lg:w-1/3">

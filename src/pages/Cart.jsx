@@ -8,18 +8,21 @@ import BillForm from "../components/BillForm";
 import CheckoutSummary from "../components/CheckoutSummary";
 
 export const Cart = () => {
-  const { cartItem, updateQuantity, deleteItem } = useCart();
-  const navigate = useNavigate();
+  const { cartItem, updateQuantity, deleteItem } = useCart(); // Cart context functions
+  const navigate = useNavigate(); // For navigation
 
+  // Calculate total price
   const totalPrice = Number(
     cartItem.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)
   );
 
-  const [currentStep, setCurrentStep] = useState("cart"); // cart, bill, checkout
-  const [deliveryData, setDeliveryData] = useState({});
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [grandTotal, setGrandTotal] = useState(0);
+  // Steps: cart, bill, checkout
+  const [currentStep, setCurrentStep] = useState("cart");
+  const [deliveryData, setDeliveryData] = useState({}); // Stores delivery info
+  const [paymentMethod, setPaymentMethod] = useState(""); // Stores selected payment method
+  const [grandTotal, setGrandTotal] = useState(0); // Stores final total including any fees
 
+  // Show empty cart if no items
   if (cartItem.length === 0) {
     return (
       <div className="flex flex-col gap-4 justify-center items-center min-h-[60vh] px-4 text-center">
@@ -39,7 +42,7 @@ export const Cart = () => {
     );
   }
 
-  // Step Navigation
+  // Render BillForm step
   if (currentStep === "bill") {
     return (
       <BillForm
@@ -54,6 +57,7 @@ export const Cart = () => {
     );
   }
 
+  // Render CheckoutSummary step
   if (currentStep === "checkout") {
     return (
       <CheckoutSummary
@@ -70,69 +74,66 @@ export const Cart = () => {
 
       {/* Cart Items Section */}
       <div className="space-y-4 mb-6">
-  {cartItem.map((item, index) => (
-    <div
-      key={index}
-      className="bg-gray-100 p-4 rounded-md flex justify-between items-center flex-wrap gap-4"
-    >
-      {/* Left: Image + Title + Price */}
-      <div className="flex gap-4 items-center min-w-0 flex-1">
-        <img
-          src={item.images[0]}
-          alt={item.title}
-          className="w-20 h-20 rounded-md flex-shrink-0 object-cover"
-        />
-        <div className="min-w-0">
-          <h1 className="line-clamp-2 text-base font-medium break-words">
-            {item.title}
-          </h1>
-          <p className="text-red-500 font-semibold text-lg mt-1">
-            ₹ {item.price}
-          </p>
-        </div>
+        {cartItem.map((item, index) => (
+          <div
+            key={index}
+            className="bg-gray-100 p-4 rounded-md flex justify-between items-center flex-wrap gap-4"
+          >
+            {/* Left: Image + Title + Price */}
+            <div className="flex gap-4 items-center min-w-0 flex-1">
+              <img
+                src={item.images[0]}
+                alt={item.title}
+                className="w-20 h-20 rounded-md flex-shrink-0 object-cover"
+              />
+              <div className="min-w-0">
+                <h1 className="line-clamp-2 text-base font-medium break-words">
+                  {item.title}
+                </h1>
+                <p className="text-red-500 font-semibold text-lg mt-1">
+                  ₹ {item.price}
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Quantity buttons + Delete */}
+            <div className="flex items-center gap-4 flex-shrink-0">
+              {/* Quantity Controls */}
+              <div className="bg-red-500 text-white flex items-center gap-3 px-3 py-2 rounded-md font-bold text-lg">
+                <button
+                  onClick={() => updateQuantity(cartItem, item.id, "decrease")}
+                  className="cursor-pointer"
+                >
+                  -
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  onClick={() => updateQuantity(cartItem, item.id, "increase")}
+                  className="cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+
+              {/* Delete item */}
+              <span
+                onClick={() => deleteItem(item.id)}
+                className="hover:bg-white/60 transition-all p-2 rounded-full hover:shadow-md cursor-pointer"
+              >
+                <FaRegTrashAlt className="text-red-500 text-xl" />
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Right: Quantity + Delete */}
-      <div className="flex items-center gap-4 flex-shrink-0">
-        <div className="bg-red-500 text-white flex items-center gap-3 px-3 py-2 rounded-md font-bold text-lg">
-          <button
-            onClick={() =>
-              updateQuantity(cartItem, item.id, "decrease")
-            }
-            className="cursor-pointer"
-          >
-            -
-          </button>
-          <span>{item.quantity}</span>
-          <button
-            onClick={() =>
-              updateQuantity(cartItem, item.id, "increase")
-            }
-            className="cursor-pointer"
-          >
-            +
-          </button>
-        </div>
-
-        <span
-          onClick={() => deleteItem(item.id)}
-          className="hover:bg-white/60 transition-all p-2 rounded-full hover:shadow-md cursor-pointer"
-        >
-          <FaRegTrashAlt className="text-red-500 text-xl" />
-        </span>
-      </div>
-    </div>
-  ))}
-</div>
-
-
-      {/* Delivery Form */}
+      {/* Delivery Form Section */}
       <div className="w-full flex justify-center">
         <div className="w-full md:w-1/2 lg:w-1/3">
           <DeliveriForm
             onSubmit={(data) => {
-              setDeliveryData(data);
-              setCurrentStep("bill");
+              setDeliveryData(data); // Save delivery info
+              setCurrentStep("bill"); // Move to billing step
             }}
           />
         </div>

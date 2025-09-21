@@ -5,9 +5,10 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export const Auth = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfPassword, setShowConfPassword] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  // State variables
+  const [showPassword, setShowPassword] = useState(false); // toggle password visibility
+  const [showConfPassword, setShowConfPassword] = useState(false); // toggle confirm password
+  const [isLogin, setIsLogin] = useState(false); // toggle between login/signup
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -16,20 +17,24 @@ export const Auth = () => {
     confirmPassword: "",
   });
 
-  const { signup, login } = useAuth();
-  const navigate = useNavigate();
+  const { signup, login } = useAuth(); // auth context functions
+  const navigate = useNavigate(); // navigation after login/signup
 
+  // Handle input changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (isLogin) {
+      // Login
       login(form.email, form.password);
       navigate("/"); // redirect after login
     } else {
+      // Signup
       if (form.password !== form.confirmPassword) {
         alert("Passwords don’t match!");
         return;
@@ -38,6 +43,7 @@ export const Auth = () => {
       navigate("/"); // redirect after signup
     }
 
+    // Reset form
     setForm({
       firstName: "",
       lastName: "",
@@ -51,9 +57,11 @@ export const Auth = () => {
     <div className="mt-12 flex justify-center items-center bg-white max-h-screen px-4 sm:px-6 md:px-10 lg:px-20">
       <div className="container mx-5 pl-3 pr-0 py-6">
         <div className="flex flex-col lg:flex-row rounded-xl shadow-xl">
-          {/* left side */}
+
+          {/* Left side - Form */}
           <div className="m-3 p-3 w-full gap-1 lg:w-1/2">
             <div className="flex flex-col">
+              {/* Form title */}
               <h3 className="text-3xl font-semibold text-gray-700 mb-2 ">
                 {isLogin ? "Welcome Back" : "Create an Account"}
               </h3>
@@ -84,6 +92,7 @@ export const Auth = () => {
 
               {/* Auth Form */}
               <form onSubmit={handleSubmit}>
+                {/* Signup fields */}
                 {!isLogin && (
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -142,6 +151,7 @@ export const Auth = () => {
                       placeholder="Enter your password"
                       className="w-full px-4 py-2 border border-gray-700 rounded"
                     />
+                    {/* Toggle password visibility */}
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -152,7 +162,7 @@ export const Auth = () => {
                   </div>
                 </div>
 
-                {/* Confirm Password */}
+                {/* Confirm Password for signup */}
                 {!isLogin && (
                   <div className="mb-4 mt-6">
                     <label className="block text-gray-700 mb-2">
@@ -167,6 +177,7 @@ export const Auth = () => {
                         placeholder="Confirm password"
                         className="w-full px-4 py-2 border border-gray-700 rounded"
                       />
+                      {/* Toggle confirm password visibility */}
                       <button
                         type="button"
                         onClick={() => setShowConfPassword(!showConfPassword)}
@@ -178,7 +189,7 @@ export const Auth = () => {
                   </div>
                 )}
 
-                {/* Remember Me */}
+                {/* Remember Me and Forget Password for login */}
                 {isLogin && (
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 mt-1">
@@ -196,12 +207,14 @@ export const Auth = () => {
                   </div>
                 )}
 
-                {/* Submit */}
+                {/* Submit button */}
                 <div className="mt-6 mb-2">
                   <button className="w-full bg-amber-600 text-white font-bold rounded py-2 hover:scale-105 duration-500">
                     {isLogin ? "Login" : "Sign Up"}
                   </button>
                 </div>
+
+                {/* Toggle between login/signup */}
                 <p className="text-center text-gray-600">
                   {isLogin
                     ? "Don't have account? Create one"
@@ -217,19 +230,19 @@ export const Auth = () => {
             </div>
           </div>
 
-          {/* Right side */}
+          {/* Right side - Image/Info */}
           <div
             className="hidden p-6 lg:p-2 lg:flex relative w-full lg:w-1/2 bg-center justify-center items-center text-white"
             style={{ backgroundImage: `url(${bg})` }}
           >
+            {/* Overlay */}
             <div className="absolute inset-0 bg-black opacity-60"></div>
             <div className="relative text-center py-5 m-2 flex flex-col justify-center items-center">
               <h3 className="text-[44px] font-bold text-white mt-10 py-4">
                 Login Your Account and Shop Now
               </h3>
               <p className="text-slate-50 max-w-xl py-5 font-semibold text-xl">
-                Login your account to enjoy the best offers and shopping
-                experience
+                Login your account to enjoy the best offers and shopping experience
               </p>
               <div className="my-2 bg-amber-500 w-60 h-[1px]"></div>
               <button className="hover:text-black text-white bg-transparent border border-white rounded px-2 py-2 w-40 cursor-pointer font-bold hover:bg-amber-300 hover:scale-110 duration-500">

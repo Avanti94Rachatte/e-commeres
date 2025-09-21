@@ -1,27 +1,28 @@
 import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 
+// Create a cart context
 export const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cartItem, setCartItem] = useState([]);
 
-  // Add to Cart with quantity support
+  // Add product to cart or update quantity if already in cart
   const addToCart = (product) => {
-    const { quantity = 1 } = product; // Use provided quantity or default 1
+    const { quantity = 1 } = product; // Use provided quantity or default to 1
     const itemInCart = cartItem.find((item) => item.id === product.id);
 
     if (itemInCart) {
-      // Increase quantity if already in cart
+      // If item exists, update its quantity
       const updatedCart = cartItem.map((item) =>
         item.id === product.id
-          ? { ...item, quantity: item.quantity + quantity }
+          ? { ...item, quantity: quantity } // replace with new quantity
           : item
       );
       setCartItem(updatedCart);
-      toast.success(`Product quantity increased by ${quantity}`);
+      toast.success(`Quantity updated to ${quantity}`);
     } else {
-      // Add new item with specified quantity
+      // If new item, add it to cart
       setCartItem([...cartItem, { ...product, quantity }]);
       toast.success("Product added to Cart");
     }
@@ -64,4 +65,5 @@ export const CartProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use cart context
 export const useCart = () => useContext(CartContext);

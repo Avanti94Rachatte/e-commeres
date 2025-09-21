@@ -7,13 +7,13 @@ import { getData } from "../context/DataContext"
 
 export const ProductCard = ({ product }) => {
   const navigate = useNavigate()
-  const { addToCart, cartItem } = useCart() // ✅ use cartItem instead of cart
-  const { wishlist, toggleWishlist } = getData()
+  const { addToCart, cartItem } = useCart() // Get cart items and addToCart function
+  const { wishlist, toggleWishlist } = getData() // Get wishlist and toggle function
 
-  // check if item is already in wishlist
+  // Check if product is in wishlist
   const isInWishlist = wishlist.some((item) => item.id === product.id)
 
-  // check if item is already in cart
+  // Check if product is in cart
   const isInCart = cartItem.some((item) => item.id === product.id)
 
   return (
@@ -39,19 +39,19 @@ export const ProductCard = ({ product }) => {
           src={product.images[0]}
           alt={`${product.title}`}
           className="bg-gray-100 aspect-square"
-          onClick={() => navigate(`/products/${product.id}`)}
+          onClick={() => navigate(`/products/${product.id}`)} // Navigate to product details page
         />
       </div>
 
       {/* Wishlist Button */}
       <button
-        onClick={() => toggleWishlist(product)}
+        onClick={() => toggleWishlist(product)} // Add/remove product from wishlist
         className="absolute top-2 right-2 text-xl"
       >
         {isInWishlist ? (
-          <FaHeart className="text-red-500" />
+          <FaHeart className="text-red-500" /> // Filled heart if in wishlist
         ) : (
-          <FaRegHeart className="text-gray-500" />
+          <FaRegHeart className="text-gray-500" /> // Empty heart if not in wishlist
         )}
       </button>
 
@@ -63,17 +63,17 @@ export const ProductCard = ({ product }) => {
         ₹{product.price}
       </p>
 
-      {/* Toggle Button: Add to Cart / Go to Cart */}
+      {/* Add to Cart / Go to Cart Button */}
       {isInCart ? (
         <button
-          onClick={() => navigate('/cart')}
+          onClick={() => navigate('/cart')} // Go to cart if already added
           className="bg-green-500 mx-2 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-green-600 transition duration-700 hover:scale-110"
         >
           Go to Cart 🛒
         </button>
       ) : (
         <button
-          onClick={() => addToCart(product)}
+          onClick={() => addToCart(product)} // Add product to cart
           className="bg-orange-400 mx-2 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-orange-600 transition duration-700 hover:scale-110"
         >
           <IoCartOutline className="w-5 h-5 sm:w-6 sm:h-6" />

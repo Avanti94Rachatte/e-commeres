@@ -1,12 +1,66 @@
-# React + Vite
+# E-Commeres
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An e-commerce frontend built with React, Vite, Tailwind CSS and a custom Cart & Checkout flow.  
+Live demo: https://e-commeres-uzx4.vercel.app/  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📂 Project Structure
 
-## Expanding the ESLint configuration
+src/
+ ├─ components/          # UI components (e.g. DeliveriForm, CheckoutSummary, etc.)
+ ├─ context/             # CartContext for managing cart state
+ ├─ pages/               # Page components like SingleProduct, Cart, Home, etc.
+ ├─ services/            # for API calls (e.g. fetching product data)
+ ├─ assets/              # images, icons, etc.
+ └─ main.jsx / App.jsx    # entry & routing
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+## 🧰 Features
+
+- Browse product list and view single product details
+- Select quantity before adding to cart
+- Toggle between **Add to Cart** / **Go to Cart** in the single product page
+- Cart page: view items, modify quantities, remove items
+- Delivery Information form with validation
+- Bill & Payment method selection (dummy) in checkout flow
+- Final Checkout summary screen showing delivery info, payment method and total order
+- Fully responsive layout (mobile / tablet / desktop)
+
+---
+
+## ⚙ Tech Stack
+
+| Part | Technology |
+|---|---|
+| Frontend | React + Vite |
+| Styling | Tailwind CSS |
+| State | React Context (CartContext) |
+| Data source | Dummy JSON (for product info) / Axios |
+| Icons / UI | React Icons, Toasts via `react-toastify` |
+
+---
+## ✅ Usage Flow
+
+ 1. Go to a product from product listing → you can choose quantity → Add to Cart
+ 2. In Cart page you can increase / decrease quantity for each item or remove item
+ 3. Click “Proceed to Checkout” → fill Delivery Info, choose Payment method → mock “Place Order”
+ 4. After “Place Order” alert, you are redirected to Products page and the Cart is cleared for fresh start
+
+---
+
+
+## 🛠 Getting Started
+
+### Prerequisites
+
+- Node.js installed
+- npm (or yarn) available
+
+### Install & Run Locally
+
+```bash
+git clone https://github.com/Avanti94Rachatte/e-commeres.git
+cd e-commeres
+npm install
+npm run dev

@@ -4,7 +4,7 @@ import { ProductCard } from "../components/ProductCard";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export const Wishlist = () => {
-  const { wishlist, removeFromWishlist } = getData();
+  const { wishlist, removeFromWishlist } = getData(); // Get wishlist data & remove function
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -28,6 +28,7 @@ export const Wishlist = () => {
           ))}
         </div>
       ) : (
+        // Empty wishlist animation
         <div className="flex flex-col gap-4 justify-center items-center min-h-[60vh] px-4 text-center">
           <h1 className="font-bold text-2xl text-red-500">Wishlist is empty</h1>
           <div className="w-60 sm:w-80 md:w-full max-w-xl">

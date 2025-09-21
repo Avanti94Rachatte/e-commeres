@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { FaFacebook, FaLinkedin, FaPhone, FaTwitter, FaYoutube } from "react-icons/fa";
-import logo from "../assets/logo.png";
+import logoImg from "../assets/logo.png";
+import { Link} from "react-router-dom";
+
+// import { useNavigate } from "react-router-dom";
 
 export default function FooterPage() {
+
+  // const navigate = useNavigate();
   // State to track which sections are open on small screens
   // Could be an object or individual booleans, here I use object keyed by section name
   const [openSections, setOpenSections] = useState({
@@ -18,14 +23,17 @@ export default function FooterPage() {
       [section]: !prev[section],
     }));
   };
-
+  
   return (
     <footer className="bg-slate-800 text-white pt-8 pb-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:justify-around gap-8">
           {/* Logo and Contact */}
           <div className="flex flex-col items-center md:items-start md:w-1/4">
-            <img src={logo} alt="Logo" className="h-24 rounded-md mb-4" />
+          {/* navigation to home page */}
+          <Link to="/"  onClick={()=>window.scrollTo({top:0, behavior: "smooth"})}
+          ><img src={logoImg} alt="Logo" className="h-24 rounded-md mb-4" /></Link>
+            
             <div className="flex items-center space-x-4 text-center md:text-left">
               <div>
                 <h3 className="font-thin text-sm sm:text-base">

@@ -11,14 +11,14 @@ export const AuthProvider = ({ children }) => {
     if (savedUser) setUser(JSON.parse(savedUser));
   }, []);
 
-  // Fake signup
+  //  signup
   const signup = (email, password, firstName, lastName) => {
     const newUser = { email, firstName, lastName };
     setUser(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
   };
 
-  // Fake login (checks saved user)
+  //  login (checks saved user)
   const login = (email, password) => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
     if (savedUser && savedUser.email === email) {

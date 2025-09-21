@@ -9,15 +9,21 @@ import { useCart } from '../context/CartContext';
 export const SingleProduct = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { addToCart, cartItem } = useCart();
+  const { addToCart, cartItem } = useCart(); // Get cart functions and items
 
   const [singleProduct, setSingleProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
+  // Fetch single product from API
   const getSingleProduct = async () => {
     try {
       const res = await axios.get(`https://dummyjson.com/products/${params.id}`);
       setSingleProduct(res.data);
+
+      // Set quantity to the cart quantity if item is already in cart
+      const itemInCart = cartItem.find(item => item.id === res.data.id);
+      if (itemInCart) setQuantity(itemInCart.quantity);
+
     } catch (error) {
       console.log(error);
     }  
@@ -42,7 +48,11 @@ export const SingleProduct = () => {
     : 0;
 
   // Check if item is already in cart
-  const isInCart = cartItem.some((item) => item.id === singleProduct.id);
+  const itemInCart = cartItem.find(item => item.id === singleProduct.id);
+  const isInCart = !!itemInCart;
+
+  // Compare current quantity with cart quantity
+  const quantityChanged = isInCart ? quantity !== itemInCart.quantity : true;
 
   return (
     <div className="px-4 sm:px-6 md:px-8 pb-10">
@@ -91,21 +101,36 @@ export const SingleProduct = () => {
             />
           </div>
 
-          {/* Add to Cart / Go to Cart Button */}
-          <div className="mt-6">
-            {isInCart ? (
+          {/* Buttons Section */}
+          <div className="mt-6 flex gap-3 flex-wrap">
+            {isInCart && (
+              <>
+                {/* Update Cart Button */}
+                <button
+                  onClick={() => addToCart({ ...singleProduct, quantity })}
+                  disabled={!quantityChanged} // Disable if quantity not changed
+                  className={`px-3 py-2 text-sm sm:text-base rounded-md w-full md:w-auto flex gap-2 items-center justify-center font-semibold transition duration-700
+                    ${quantityChanged ? "bg-orange-400 text-white hover:bg-orange-600 cursor-pointer" 
+                                      : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+                >
+                  <IoCartOutline className="w-5 h-5 sm:w-6 sm:h-6" />
+                  Update Cart
+                </button>
+
+                {/* Go to Cart Button */}
+                <button
+                  onClick={() => navigate('/cart')}
+                  className="bg-green-500 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full md:w-auto cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-green-600 transition duration-700 hover:scale-105"
+                >
+                  Go to Cart 🛒
+                </button>
+              </>
+            )}
+
+            {!isInCart && (
               <button
-                onClick={() => navigate('/cart')}
-                className="bg-green-500 mx-2 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-green-600 transition duration-700 hover:scale-105"
-              >
-                Go to Cart 🛒
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  addToCart({ ...singleProduct, quantity });
-                }}
-                className="bg-orange-400 mx-2 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-orange-600 transition duration-700 hover:scale-105"
+                onClick={() => addToCart({ ...singleProduct, quantity })}
+                className="bg-orange-400 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-orange-600 transition duration-700 hover:scale-105"
               >
                 <IoCartOutline className="w-5 h-5 sm:w-6 sm:h-6" />
                 Add to Cart

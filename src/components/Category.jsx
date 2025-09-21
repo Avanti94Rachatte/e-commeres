@@ -3,18 +3,23 @@ import { getData } from '../context/DataContext'
 import { useNavigate } from 'react-router-dom';
 
 const Category = () => {
+  // Destructure functions and data from custom context
   const { data, fetchAllProducts, categoryOnlyData } = getData();
-  const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  
+  const navigate = useNavigate(); // For page navigation
+  const [selectedCategory, setSelectedCategory] = useState('All'); // Track selected category
 
+  // Fetch all products when component mounts
   useEffect(() => {
     fetchAllProducts();
   }, []);
 
+  // Handle category selection change
   const handleCategoryChange = (e) => {
     const category = e.target.value;
     setSelectedCategory(category);
 
+    // Navigate to all products or specific category page
     if (category === 'All') {
       navigate('/products');
     } else {
@@ -23,9 +28,11 @@ const Category = () => {
   };
 
   return (
-    <div className=" rounded-md p-2 hover:scale-x-110 duration-700 bg-transparent w-50"> {/* Added padding */}
+    <div className="rounded-md p-2 hover:scale-x-110 duration-700 bg-transparent w-50"> {/* Container styling */}
       <div className="max-w-7xl mx-1 flex justify-center px-4">
         <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md">
+          
+          {/* Category Dropdown */}
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
@@ -50,9 +57,8 @@ const Category = () => {
               duration-600
             "
           >
-            {/* Include 'All' option */}
-            <option value="All">All</option>
-
+           
+            {/* Dynamically generate category options */}
             {categoryOnlyData?.map((category, index) => (
               <option key={index} value={category}>
                 {category.toUpperCase()}
@@ -60,7 +66,7 @@ const Category = () => {
             ))}
           </select>
 
-          {/* Dropdown arrow */}
+          {/* Custom dropdown arrow */}
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <svg
               className="w-5 h-5 text-black"

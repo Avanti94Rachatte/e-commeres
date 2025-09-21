@@ -6,35 +6,37 @@ import { ProductCard } from "../components/ProductCard";
 import { Pagination } from "../components/Pagination";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { IoFilter } from "react-icons/io5";
-import { IoClose } from "react-icons/io5";
 
 export const Product = () => {
-  const { data, fetchAllProducts, search } = getData(); // ✅ global search
-  const [category, setCategory] = useState("All");
-  const [brand, setBrand] = useState("All");
-  const [priceRange, setPriceRange] = useState([0, 5000]);
-  const [page, setPage] = useState(1);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { data, fetchAllProducts, search } = getData(); // Global data & search
+  const [category, setCategory] = useState("All"); // Selected category filter
+  const [brand, setBrand] = useState("All"); // Selected brand filter
+  const [priceRange, setPriceRange] = useState([0, 5000]); // Price range filter
+  const [page, setPage] = useState(1); // Current pagination page
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // Mobile filter toggle
 
+  // Fetch products on component mount
   useEffect(() => {
     fetchAllProducts();
     window.scrollTo(0, 0);
   }, []);
 
+  // Handle category & brand change
   const handleChategoryChange = (e) => {
     setCategory(e.target.value);
-    setPage(1);
+    setPage(1); // Reset page on filter change
   };
 
   const handleBrandChange = (e) => {
     setBrand(e.target.value);
-    setPage(1);
+    setPage(1); // Reset page on filter change
   };
 
   const padeHandler = (selectedPage) => {
-    setPage(selectedPage);
+    setPage(selectedPage); // Pagination handler
   };
 
+  // Filter data based on search, category, brand, price
   const filteredData = data?.filter(
     (item) =>
       item.title.toLowerCase().includes(search.toLowerCase()) &&
@@ -44,12 +46,12 @@ export const Product = () => {
       item.price <= priceRange[1]
   );
 
-  const dynamicPage = Math.ceil(filteredData?.length / 8);
+  const dynamicPage = Math.ceil(filteredData?.length / 8); // Total pages
 
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-        {/* Toggle Button - Only visible on small screens */}
+        {/* Mobile filter toggle button */}
         <div className="block lg:hidden text-right my-4">
           <button
             onClick={() => setIsFilterOpen(true)}
@@ -62,7 +64,7 @@ export const Product = () => {
 
         {data?.length > 0 ? (
           <div className="flex flex-col lg:flex-row gap-8">
-ll            {/* Sidebar Filter */}
+            {/* Sidebar Filter */}
             <FilterSection
               category={category}
               setCategory={setCategory}
@@ -80,6 +82,7 @@ ll            {/* Sidebar Filter */}
             <div className="flex-1 flex flex-col items-center">
               {filteredData?.length > 0 ? (
                 <>
+                  {/* Product Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6 w-full">
                     {filteredData
                       ?.slice(page * 8 - 8, page * 8)
@@ -87,6 +90,8 @@ ll            {/* Sidebar Filter */}
                         <ProductCard key={index} product={product} />
                       ))}
                   </div>
+
+                  {/* Pagination */}
                   <div className="mt-8 w-full flex justify-center">
                     <Pagination
                       padeHandler={padeHandler}
@@ -96,7 +101,8 @@ ll            {/* Sidebar Filter */}
                   </div>
                 </>
               ) : (
-                <div className="flex justify-center items-center w-full  lg:mt-40 lg:h-[400px] lg:w-[900px]">
+                // No products found animation
+                <div className="flex justify-center items-center w-full lg:mt-40 lg:h-[400px] lg:w-[900px]">
                   <DotLottieReact
                     src="https://lottie.host/12e38197-df80-4c9e-a3bb-87cbdc7dd7cd/PIKjPpB10d.lottie"
                     loop
@@ -108,6 +114,7 @@ ll            {/* Sidebar Filter */}
             </div>
           </div>
         ) : (
+          // Loading spinner while data is fetching
           <div className="flex justify-center items-center h-[400px]">
             <Spinner />
           </div>

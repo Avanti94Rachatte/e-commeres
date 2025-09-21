@@ -14,38 +14,40 @@ export const FilterSection = ({
   isOpen,
   onClose,
 }) => {
-  const { brandOnlyData, categoryOnlyData, search, setSearch } = getData(); // ✅ no setters
+  const { brandOnlyData, categoryOnlyData, search, setSearch } = getData(); // Get categories, brands, and search state from context
 
   return (
     <>
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar: visible on large screens */}
       <div className="hidden lg:block w-full lg:w-[280px]">
         <div className="bg-gray-100 p-4 rounded-md h-max w-full">
-          <FilterContent />
+          <FilterContent /> {/* Render filter form */}
         </div>
       </div>
 
-      {/* Mobile/Tablet: Slide-in */}
+      {/* Mobile/Tablet: Slide-in overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/40 lg:hidden">
           <div className="bg-white w-full max-w-sm p-4 overflow-y-auto shadow-lg">
+            {/* Header with close button */}
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Filters</h2>
               <button onClick={onClose} className="text-red-500 text-2xl">
                 <IoClose />
               </button>
             </div>
-            <FilterContent />
+            <FilterContent /> {/* Render filter form */}
           </div>
         </div>
       )}
     </>
   );
 
+  // Filter form content used in both desktop and mobile
   function FilterContent() {
     return (
       <>
-        {/* Search */}
+        {/* Search input */}
         <input
           onChange={(e) => setSearch(e.target.value)}
           type="text"
@@ -54,7 +56,7 @@ export const FilterSection = ({
           className="bg-white p-2 rounded-md border-2 border-gray-400 w-full"
         />
 
-        {/* Category */}
+        {/* Category filter */}
         <h1 className="mt-5 font-semibold text-xl">Category</h1>
         <div className="flex flex-col gap-2 mt-3 max-h-48 overflow-auto">
           {categoryOnlyData?.map((item, index) => (
@@ -63,7 +65,7 @@ export const FilterSection = ({
                 type="checkbox"
                 value={item}
                 name={item}
-                checked={category === item}
+                checked={category === item} // Highlight selected category
                 onChange={handleChategoryChange}
               />
               <span className="uppercase">{item}</span>
@@ -71,14 +73,13 @@ export const FilterSection = ({
           ))}
         </div>
 
-        {/* Brand */}
+        {/* Brand filter */}
         <h1 className="mt-5 font-semibold text-xl mb-3">Brand</h1>
         <select
           onChange={handleBrandChange}
           className="bg-white w-full border-2 border-gray-200 rounded-md p-2"
-          value={brand}
+          value={brand} // Show selected brand
         >
-          <option value="All">All</option>
           {brandOnlyData?.map(
             (item, index) =>
               item && (
@@ -89,7 +90,7 @@ export const FilterSection = ({
           )}
         </select>
 
-        {/* Price Range */}
+        {/* Price Range filter */}
         <h1 className="mt-5 font-semibold text-xl mb-3">Price Range</h1>
         <div className="flex flex-col gap-2">
           <label>
@@ -107,7 +108,7 @@ export const FilterSection = ({
           />
         </div>
 
-        {/* Reset */}
+        {/* Reset Filters button */}
         <button
           onClick={() => {
             setCategory("All");

@@ -62,7 +62,7 @@ export const Product = () => {
 
         {data?.length > 0 ? (
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Sidebar Filter */}
+ll            {/* Sidebar Filter */}
             <FilterSection
               category={category}
               setCategory={setCategory}
@@ -96,7 +96,7 @@ export const Product = () => {
                   </div>
                 </>
               ) : (
-                <div className="flex justify-center items-center w-full h-[300px]">
+                <div className="flex justify-center items-center w-full  lg:mt-40 lg:h-[400px] lg:w-[900px]">
                   <DotLottieReact
                     src="https://lottie.host/12e38197-df80-4c9e-a3bb-87cbdc7dd7cd/PIKjPpB10d.lottie"
                     loop

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 export const ProductListView = ({ product }) => {
   const { addToCart } = useCart()
   const navigate = useNavigate()
+  // check if item is already in cart
+  const isInCart = cartItem.some((item) => item.id === product.id)
 
   return (
     <div className="space-y-4 mt-2 rounded-md">
@@ -33,12 +35,23 @@ export const ProductListView = ({ product }) => {
             Or fastest delivery <span className="font-semibold">Tomorrow</span>
           </p>
 
-          <button
-            onClick={() => addToCart(product)}
-            className="bg-orange-400 text-white px-4 py-2 rounded-md mt-2 md:mt-4 hover:bg-orange-600 transition duration-700"
-          >
-            Add to Cart
-          </button>
+          {/* Toggle Button: Add to Cart / Go to Cart */}
+      {isInCart ? (
+        <button
+          onClick={() => navigate('/cart')}
+          className="bg-green-500 mx-2 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-green-600 transition duration-700 hover:scale-110"
+        >
+          Go to Cart 🛒
+        </button>
+      ) : (
+        <button
+          onClick={() => addToCart(product)}
+          className="bg-orange-400 mx-2 px-3 py-2 text-sm sm:text-base rounded-md text-white w-full cursor-pointer flex gap-2 items-center justify-center font-semibold hover:bg-orange-600 transition duration-700 hover:scale-110"
+        >
+          <IoCartOutline className="w-5 h-5 sm:w-6 sm:h-6" />
+          Add to Cart
+        </button>
+      )}
         </div>
       </div>
     </div>

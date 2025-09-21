@@ -1,7 +1,11 @@
 import banner from '../assets/banner.jpg'
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 
 export const MidBanner = () => {
+ 
+  const navigate = useNavigate()
+   
   return (
     <div className="bg-gray-100 md:py-24 py-12 rounded-2xl">
       <div
@@ -20,7 +24,8 @@ export const MidBanner = () => {
             <p className="text-base sm:text-lg md:text-xl mb-6">
             Deals, delights, and everything in between <span className='font-extrabold'>MY SHOP</span> shopping made simple.
             </p>
-            <button className="bg-orange-300/70 hover:bg-orange-600 transform hover:scale-105 transition duration-600 text-white font-semibold py-2 px-4 md:py-3 md:px-6 rounded-lg">
+            <button onClick={() => navigate(`/products`)} 
+             className="bg-orange-300/70 hover:bg-orange-600 transform hover:scale-105 transition duration-600 text-white font-semibold py-2 px-4 md:py-3 md:px-6 rounded-lg">
               Shop Now
             </button>
           </div>

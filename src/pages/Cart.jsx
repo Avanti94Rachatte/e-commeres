@@ -25,12 +25,13 @@ export const Cart = () => {
   // Show empty cart if no items
   if (cartItem.length === 0) {
     return (
-      <div className="flex flex-col gap-4 justify-center items-center min-h-[60vh] px-4 text-center">
+      <div className="flex flex-col gap-2 justify-center items-center min-h-[60vh] px-4 text-center">
         <h1 className="font-bold text-2xl text-red-500">Cart is empty</h1>
         <DotLottieReact
           src="https://lottie.host/3bdd20c2-3f0a-4ff2-baf7-b2e83e41cbff/2bQyP8jLAh.lottie"
           loop
           autoplay
+          className="lg:w-[700px] md:[650px] w-[500px] "
         />
         <button
           onClick={() => navigate("/products")}
@@ -138,7 +139,7 @@ export const Cart = () => {
 
       {/* Delivery Form Section */}
       <div className="w-full flex justify-center">
-        <div className="w-full md:w-1/2 lg:w-1/3">
+        <div className="w-full md:w-1/2 lg:w-5/3">
           <DeliveriForm
             onSubmit={(data) => {
               setDeliveryData(data); // Save delivery info

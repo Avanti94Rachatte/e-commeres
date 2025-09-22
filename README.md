@@ -1,7 +1,7 @@
 # E-Commeres
 
 An e-commerce frontend built with React, Vite, Tailwind CSS and a custom Cart & Checkout flow.  
-Live demo: https://e-commeres-uzx4.vercel.app/  
+Live demo: https://e-commeres-myshop.vercel.app/  
 
 ---
 

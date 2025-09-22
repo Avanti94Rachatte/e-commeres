@@ -36,7 +36,7 @@ export const ProductCard = ({ product }) => {
       {/* Product Image */}
       <div className="bg-cover">
         <img
-          src={product.images[0]}
+          src={product.images ? product.images[0] : product.image} 
           alt={`${product.title}`}
           className="bg-gray-100 aspect-square"
           onClick={() => navigate(`/products/${product.id}`)} // Navigate to product details page

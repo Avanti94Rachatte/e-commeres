@@ -4,11 +4,12 @@ import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import CountryDropdown from "./Country";
-import Category from "./Category";
+
 import { useCart } from "../context/CartContext";
 import { getData } from "../context/DataContext";
 import { FaHeart } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+
 
 const Navbar = () => {
   const { cartItem } = useCart(); // Cart items from context
@@ -57,11 +58,8 @@ const Navbar = () => {
             type="text"
             placeholder="Search..."
             value={search}
-            className="bg-white p-2 ml-2 rounded-md border-2 border-gray-400 w-48"
+            className="bg-white p-2 ml-2 rounded-md border-2 border-gray-400 w-48 lg:w-96  xl:w-96"
           />
-
-          {/* Category dropdown */}
-          <Category className="w-20"/>
 
           {/* Navigation links */}
           <ul className="flex gap-4 items-center text-lg font-semibold">
